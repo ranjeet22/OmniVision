@@ -1,0 +1,10 @@
+.venv/
+frontend/node_modules/
+frontend/dist/
+__pycache__/
+*.pyc
+.env
+downloads/uploads/
+flask-stdout.log
+flask-stderr.log
+vector_db/
