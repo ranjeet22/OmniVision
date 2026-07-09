@@ -1,406 +1,339 @@
-<div align="center">
-  
-# OmniVision
-### See Beyond the Video
+<!-- PROJECT TITLE & SUBTITLE -->
+<h1 align="center">🔮 OmniVision</h1>
+<p align="center">
+  <strong>Transform video and audio sources into search-optimized, structured knowledge bases using a state-of-the-art local RAG engine.</strong>
+</p>
 
-AI-powered video understanding that turns long-form content into searchable knowledge with transcription, summarization, and conversational RAG.
+<!-- BADGES -->
+<p align="center">
+  <a href="https://github.com/ranjeet22/OmniVision/stargazers"><img src="https://img.shields.io/github/stars/ranjeet22/OmniVision?style=for-the-badge&color=7C3AED&labelColor=1F2937&logo=github" alt="Stars"></a>
+  <a href="https://github.com/ranjeet22/OmniVision/network/members"><img src="https://img.shields.io/github/forks/ranjeet22/OmniVision?style=for-the-badge&color=EC4899&labelColor=1F2937&logo=github" alt="Forks"></a>
+  <a href="https://github.com/ranjeet22/OmniVision/issues"><img src="https://img.shields.io/github/issues/ranjeet22/OmniVision?style=for-the-badge&color=3B82F6&labelColor=1F2937&logo=github" alt="Issues"></a>
+  <a href="https://github.com/ranjeet22/OmniVision/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ranjeet22/OmniVision?style=for-the-badge&color=10B981&labelColor=1F2937&logo=github" alt="License"></a>
+</p>
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-Backend-000000?style=for-the-badge&logo=flask&logoColor=white)
-![React](https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=0B0F19)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-Styling-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![ChromaDB](https://img.shields.io/badge/ChromaDB-RAG-7B61FF?style=for-the-badge)
-![Whisper](https://img.shields.io/badge/Whisper-Speech%20to%20Text-4B5563?style=for-the-badge)
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/Flask-3.0-000000?style=flat-square&logo=flask&logoColor=white" alt="Flask" />
+  <img src="https://img.shields.io/badge/Mistral%20AI-small-F35C14?style=flat-square&logo=mistral&logoColor=white" alt="Mistral" />
+  <img src="https://img.shields.io/badge/ChromaDB-Local-cyan?style=flat-square&logo=googlechromecast&logoColor=white" alt="ChromaDB" />
+  <img src="https://img.shields.io/badge/Whisper-Local-9CF?style=flat-square&logo=openai&logoColor=white" alt="Whisper" />
+  <img src="https://img.shields.io/badge/Sarvam%20AI-Hinglish-orange?style=flat-square" alt="Sarvam AI" />
+</p>
 
-</div>
+<!-- PROJECT BANNER -->
+<p align="center">
+  <img width="100%" alt="Image" src="https://github.com/user-attachments/assets/287c810d-7ce3-4066-9da8-7c9e304ea90c" />
+</p>
+
+<hr />
+
+
+## 🚀 Welcome to OmniVision
+**OmniVision** is a powerful AI Video and Audio Assistant that processes media inputs (YouTube URLs or local file uploads) to extract structured, actionable summaries and compile a searchable knowledge base.
+
+It handles multi-modal pipeline routing:
+1. **Audio Extraction**: Parses inputs via `yt-dlp` and `ffmpeg` into high-quality audio chunks.
+2. **Dual STT Engine**: Directs English audio to a local **OpenAI Whisper** model and Hinglish (mixed Hindi-English) audio to the **Sarvam AI** speech translation API.
+3. **Structured Insights**: Runs summaries and extracts action items, key decisions, and open questions using **Mistral AI**.
+4. **Vector database (RAG)**: Spins up a localized **ChromaDB** workspace using **HuggingFace Embeddings** to power interactive, context-grounded Q&A sessions.
 
 ---
 
-## Overview
+## ⚡ Interactive Quick Demo
 
-OmniVision transforms videos into structured, searchable intelligence.
+<details>
+<summary><b>🖥️ Web UI Dashboard Preview</b></summary>
 
-Upload a local video or paste a YouTube link, choose the transcription mode, and OmniVision will:
+Our premium, glassmorphic Web UI (powered by Vite, React, and Tailwind CSS) provides an intuitive workspace:
 
-- transcribe the video
-- generate a title and summary
-- extract action items, key decisions, and open questions
-- index the transcript in ChromaDB
-- let you ask follow-up questions through a RAG assistant
+- **Input Control Center**: Toggle between uploading files directly or pasting public YouTube URLs.
+- **Language Switcher**: Simple toggle between English (processed entirely locally) and Hinglish.
+- **Real-Time Step Progress Tracker**: Watch visual steps light up sequentially:
+  ```
+  [✓] Audio Extracted ──> [✓] Transcribed ──> [✓] Indexed in Chroma DB ──> [✓] Insights Ready
+  ```
+- **Interactive Insights Tabs**: Browse generated titles, summaries, action items, key decisions, and open questions in dedicated layouts.
+- **RAG Chat Window**: Chat with the video and get precise responses based only on the parsed context.
 
-This project combines a Flask backend, a React + Tailwind frontend, Whisper-based transcription, Sarvam Hindi-to-English transcription support, and LangChain-powered summarization and retrieval.
+</details>
+
+<details>
+<summary><b>💻 CLI Interactive Session Preview</b></summary>
+
+Here is an example session running via the command line interface:
+
+```bash
+$ python main.py
+starting AI Video Assistant
+Enter YouTube URL or local file path: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+Language (english/hinglish): english
+Using Whisper for transcription.
+Loading Whisper model: small ...
+Whisper model loaded.
+Transcribing chunk 1/1...
+Transcription complete.
+
+============================================================
+📌 Title: Rick Astley - Never Gonna Give You Up (Official Music Video)
+
+📋 Summary:
+* The content details a firm commitment toward emotional stability and partnership loyalty.
+* The speaker makes several binding declarations: never leaving, never letting the other down, and avoiding lies that cause pain.
+
+✅ Action Items:
+* Build long-term, supportive connections.
+
+🔑 Key Decisions:
+* Standardized support policy will remain active indefinitely.
+
+❓ Open Questions:
+* Who is the specific target audience for these promises?
+============================================================
+
+💬 Chat with your meeting (type 'exit' to quit)
+
+You: what is the speaker's main promise?
+
+🤖 Assistant: The speaker's main promise is that they will never give you up, never let you down, never run around and desert you, never make you cry, never say goodbye, and never tell a lie and hurt you.
+
+You: exit
+👋 Goodbye!
+```
+
+</details>
 
 ---
 
-## Demo Flow
+## 🔑 Key Features
+* 🎙️ **Multi-Engine Speech Processing**: Local **Whisper** model for English or **Sarvam AI STT** translation API for code-mixed Indian languages (Hinglish).
+* 📝 **Insight Extraction**: Automated identification of action items, decisions, and unanswered questions via Mistral's `mistral-small-latest`.
+* 🔍 **Smart Retrieval-Augmented Generation (RAG)**: Integrates LangChain's LCEL pipeline with `sentence-transformers` for embedding and Chroma for similarity retrieval.
+* ⚡ **Hybrid Interface**: A responsive modern React web dashboard and a minimal, fast interactive CLI wrapper.
+* 📦 **Robust Segment Management**: Splitting pipelines slice audio into optimized, safe sizes (5-minute chunks for local Whisper, 25-second pieces for Sarvam API) preventing timeout failures.
+
+---
+
+## 🧬 System Architecture
+
+The following diagram illustrates how media files flow through OmniVision to compile searchable knowledge:
 
 ```mermaid
-flowchart LR
-    A[Upload Video or Paste YouTube URL] --> B[Audio Extraction]
-    B --> C[Transcription]
-    C --> D[Summary + Insights]
-    D --> E[ChromaDB Indexing]
-    E --> F[RAG Chat Experience]
+graph TD
+    A[YouTube URL / Local File] --> B[Audio Processor]
+    B -->|WAV Chunks| C[Transcriber Router]
+    C -->|English| D[Local Whisper Model]
+    C -->|Hindi / Hinglish| E[Sarvam AI STT]
+    D --> F[Full Transcript]
+    E --> F
+    F --> G[Mistral AI Insights]
+    G --> H[Summary • Actions • Decisions • Questions]
+    F --> I[HuggingFace Embeddings<br/>all-MiniLM-L6-v2]
+    I --> J[(ChromaDB Vector Store)]
+    K[User Question] --> L[RAG Retriever]
+    J --> L
+    L --> M[Mistral LLM]
+    M --> N[Response to User]
+
+    %% Input
+    style A fill:#EEF2FF,stroke:#6366F1,stroke-width:2px,color:#312E81
+
+    %% Processing
+    style B fill:#F8FAFC,stroke:#64748B,stroke-width:1.5px,color:#0F172A
+    style C fill:#F8FAFC,stroke:#64748B,stroke-width:1.5px,color:#0F172A
+    style D fill:#DBEAFE,stroke:#3B82F6,stroke-width:1.5px,color:#1E3A8A
+    style E fill:#E0F2FE,stroke:#0EA5E9,stroke-width:1.5px,color:#0C4A6E
+
+    %% Transcript
+    style F fill:#FEF9C3,stroke:#EAB308,stroke-width:1.5px,color:#713F12
+
+    %% AI Layer
+    style G fill:#F3E8FF,stroke:#9333EA,stroke-width:1.5px,color:#581C87
+    style H fill:#ECFDF5,stroke:#10B981,stroke-width:1.5px,color:#065F46
+
+    %% RAG Layer
+    style I fill:#EFF6FF,stroke:#2563EB,stroke-width:1.5px,color:#1E3A8A
+    style J fill:#DCFCE7,stroke:#22C55E,stroke-width:1.5px,color:#14532D
+    style K fill:#FFF7ED,stroke:#F97316,stroke-width:1.5px,color:#9A3412
+    style L fill:#F5F3FF,stroke:#8B5CF6,stroke-width:1.5px,color:#4C1D95
+    style M fill:#FCE7F3,stroke:#EC4899,stroke-width:1.5px,color:#831843
+
+    %% Output
+    style N fill:#E0F2FE,stroke:#0891B2,stroke-width:2px,color:#164E63
 ```
 
 ---
 
-## Features
+## 🛠️ Quick Start
 
-### Core Capabilities
+<details>
+<summary><b>1. System Requirements & FFmpeg Setup</b></summary>
 
-- Video upload or YouTube link analysis
-- English transcription with Whisper `small`
-- Hindi-to-English transcription with Sarvam `saaras:v2.5`
-- AI-generated title and meeting-style summary
-- Extracted action items, key decisions, and open questions
-- ChromaDB-based retrieval pipeline for follow-up questions
-- Modern light-themed UI with animated processing states
+Ensure you have **Python 3.10+** and **Node.js** installed on your system. 
 
-### Frontend Experience
+Additionally, **FFmpeg** must be installed and added to your system's PATH variables to allow audio extraction:
 
-- Custom React + Tailwind interface
-- Creative glassmorphism-inspired layout
-- Interactive processing section
-- Transcript, summary, and insight cards
-- Conversational RAG assistant
-- Markdown-rendered output formatting
+* **Windows**: Run `winget install Gyan.FFmpeg` in PowerShell as administrator.
+* **macOS**: Run `brew install ffmpeg` via Homebrew.
+* **Linux**: Run `sudo apt update && sudo apt install ffmpeg` for Debian/Ubuntu systems.
 
----
+</details>
 
-## Tech Stack
+<details>
+<summary><b>2. Set Up Environment Variables</b></summary>
 
-| Layer | Tools |
-|---|---|
-| Frontend | React, Vite, Tailwind CSS, Lucide Icons |
-| Backend | Flask |
-| Transcription | OpenAI Whisper, Sarvam AI |
-| LLM / Orchestration | LangChain, Mistral |
-| Vector Store | ChromaDB |
-| Media Processing | `yt-dlp`, `pydub`, `ffmpeg` |
-
----
-
-## Project Structure
-
-```text
-AI Video assistant/
-├─ app.py
-├─ main.py
-├─ run_backend.py
-├─ requirements.txt
-├─ .env.example
-├─ README.md
-├─ core/
-│  ├─ extractor.py
-│  ├─ pipeline.py
-│  ├─ rag_engine.py
-│  ├─ summarizer.py
-│  ├─ transcriber.py
-│  └─ vector_store.py
-├─ utils/
-│  └─ audio_processor.py
-└─ frontend/
-   ├─ index.html
-   ├─ package.json
-   ├─ package-lock.json
-   ├─ vite.config.js
-   ├─ tailwind.config.js
-   ├─ postcss.config.js
-   └─ src/
-      ├─ App.jsx
-      ├─ main.jsx
-      └─ styles.css
-```
-
----
-
-## Quick Start
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
-```
-
-### 2. Create and activate a virtual environment
-
-#### Windows PowerShell
-
-```powershell
-py -3.12 -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-#### macOS / Linux
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-### 3. Install backend dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Configure environment variables
-
-Copy `.env.example` to `.env` and fill in your keys:
-
-```bash
-cp .env.example .env
-```
-
-Required values:
-
-- `MISTRAL_API_KEY`
-- `SARVAM_API_KEY`
-
-Optional:
-
-- `WHISPER_MODEL`
-- `SARVAM_STT_MODEL`
-
-### 5. Install frontend dependencies
-
-```bash
-cd frontend
-npm install
-cd ..
-```
-
-### 6. Run the backend
-
-```bash
-python run_backend.py
-```
-
-Backend runs at:
-
-`http://127.0.0.1:5000`
-
-### 7. Run the frontend
-
-In a second terminal:
-
-```bash
-cd frontend
-npm run dev
-```
-
-Frontend runs at:
-
-`http://127.0.0.1:5173`
-
----
-
-## Environment Variables
+Create a file named `.env` in the project root:
 
 ```env
-MISTRAL_API_KEY="your_mistral_api_key_here"
-WHISPER_MODEL="small"
-SARVAM_API_KEY="your_sarvam_api_key_here"
-SARVAM_STT_MODEL="saaras:v2.5"
+# Required: Mistral API key for summaries and RAG chat
+MISTRAL_API_KEY=your_mistral_api_key_here
+
+# Optional: Required if using Hinglish transcription translation
+SARVAM_API_KEY=your_sarvam_api_key_here
+
+# Optional: Whisper model size (tiny, base, small, medium, large)
+WHISPER_MODEL=small
 ```
 
-> Never commit your real `.env` file to GitHub.
-
----
-
-## How It Works
+</details>
 
 <details>
-<summary><strong>Pipeline Breakdown</strong></summary>
+<summary><b>3. Backend Installation</b></summary>
 
-### Input Processing
-
-- If the source is a YouTube URL, the app downloads audio using `yt-dlp`
-- If the source is a local file, the app converts it to WAV
-- Audio is chunked for manageable transcription
-
-### Transcription
-
-- `english` mode uses local Whisper
-- `hinglish` mode uses Sarvam to transcribe Hindi audio into English text
-
-### Post Processing
-
-- Mistral generates:
-  - a short title
-  - a summary
-  - action items
-  - key decisions
-  - open questions
-
-### Retrieval
-
-- The transcript is chunked and embedded
-- ChromaDB stores transcript vectors
-- LangChain retrieves relevant transcript segments for Q&A
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ranjeet22/OmniVision.git
+   cd OmniVision
+   ```
+2. Set up a Python virtual environment:
+   ```bash
+   python -m venv .venv
+   ```
+3. Activate the virtual environment:
+   * **Windows (PowerShell):** `.venv\Scripts\Activate.ps1`
+   * **macOS/Linux:** `source .venv/bin/activate`
+4. Install python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 </details>
 
----
-
-## Screens and UX
-
 <details>
-<summary><strong>UI Highlights</strong></summary>
+<summary><b>4. Frontend Setup</b></summary>
 
-- Hero section with branded OmniVision positioning
-- Upload + YouTube dual input flow
-- Language selection for English or Hindi-to-English
-- Animated processing card
-- Summary and transcript views
-- Insight cards for extracted outputs
-- RAG assistant chat interface
+1. Navigate to the frontend workspace:
+   ```bash
+   cd frontend
+   ```
+2. Install npm packages:
+   ```bash
+   npm install
+   ```
+3. Build the assets for production deployment:
+   ```bash
+   npm run build
+   ```
+4. Navigate back to the root:
+   ```bash
+   cd ..
+   ```
 
 </details>
 
----
+<details>
+<summary><b>5. Running the Application</b></summary>
 
-## Common Commands
-
-### Run backend
-
+### Run Web UI Dashboard
+Launch the Flask backend server:
 ```bash
-python run_backend.py
+python app.py
 ```
+Open your web browser and go to **[http://localhost:5000](http://localhost:5000)**.
 
-### Run frontend
-
+### Run Interactive CLI Tool
+Start the terminal interface:
 ```bash
-cd frontend
-npm run dev
+python main.py
 ```
-
-### Build frontend
-
-```bash
-cd frontend
-npm run build
-```
-
----
-
-## Deployment Notes
-
-This project can be deployed, but there are a few practical considerations:
-
-- Whisper can be heavy on small/free instances
-- `ffmpeg` must be available on the server
-- `yt-dlp` and long video processing may increase runtime significantly
-- Chroma persistence should be configured carefully in production
-
-Recommended first deployment targets:
-
-- Render
-- Railway
-- VPS-based deployment for more control
-
----
-
-## Manual GitHub Upload Checklist
-
-Upload these:
-
-- `app.py`
-- `main.py`
-- `run_backend.py`
-- `requirements.txt`
-- `.env.example`
-- `README.md`
-- `core/`
-- `utils/`
-- `frontend/`
-
-Do not upload these:
-
-- `.venv/`
-- `frontend/node_modules/`
-- `frontend/dist/`
-- `.env`
-- `vector_db/`
-- `downloads/uploads/`
-- logs and cache files
-
----
-
-## Troubleshooting
-
-<details>
-<summary><strong>Frontend starts but backend does not respond</strong></summary>
-
-Make sure the backend is running with:
-
-```bash
-python run_backend.py
-```
-
-</details>
-
-<details>
-<summary><strong>PowerShell blocks virtual environment activation</strong></summary>
-
-Run:
-
-```powershell
-Set-ExecutionPolicy -Scope Process Bypass
-```
-
-Then activate again:
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-</details>
-
-<details>
-<summary><strong>YouTube processing takes a long time</strong></summary>
-
-That is expected for long videos. The pipeline currently performs:
-
-- download
-- audio extraction
-- transcription
-- summarization
-- vector indexing
-
-Try a shorter clip first when testing.
 
 </details>
 
 ---
 
-## Security Notes
+## 🔌 API Endpoints
 
-- Rotate any API keys that were ever exposed accidentally
-- Keep `.env` private
-- Do not commit vector databases, logs, or uploaded media
+OmniVision runs a clean JSON REST API backend:
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/health` | Service health status |
+| `POST` | `/api/analyze` | Transcribe and extract insights |
+| `POST` | `/api/ask` | Chat with processed transcript using RAG |
+
+<details>
+<summary><b>Detail Specs of API Endpoints</b></summary>
+
+### `POST /api/analyze`
+* **Form-Data Request Body:**
+  * `sourceType`: `"youtube"` or `"upload"`
+  * `youtubeUrl`: YouTube URL (if sourceType is `youtube`)
+  * `file`: Binary file stream (if sourceType is `upload`)
+  * `language`: `"english"` or `"hinglish"`
+* **Response Payload (`200 OK`):**
+  ```json
+  {
+    "sessionId": "UUID-hex-string",
+    "title": "Generated Meeting Title",
+    "transcript": "Full text transcription...",
+    "summary": "Formatted Markdown Summary",
+    "actionItems": "Formatted Markdown Action Items",
+    "keyDecisions": "Formatted Markdown Key Decisions",
+    "openQuestions": "Formatted Markdown Open Questions",
+    "metadata": {
+      "chunksProcessed": 3,
+      "language": "english",
+      "source": "https://..."
+    }
+  }
+  ```
+
+### `POST /api/ask`
+* **JSON Request Body:**
+  ```json
+  {
+    "sessionId": "UUID-hex-string",
+    "question": "What did they decide about the API integration?"
+  }
+  ```
+* **Response Payload (`200 OK`):**
+  ```json
+  {
+    "answer": "The API integration will be implemented using LangChain and Mistral AI..."
+  }
+  ```
+
+</details>
 
 ---
 
-## Roadmap
+## 🤝 Contributing
+Contributions are what make the open-source community an amazing place to learn, inspire, and create. Any contribution you make is **greatly appreciated**.
 
-- Background jobs for long-running video analysis
-- Live progress tracking in the UI
-- Better production deployment flow
-- Transcript export options
-- Multi-session history
-
----
-
-## License
-
-Add your preferred license here, for example `MIT`.
+1. **Fork** the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. **Commit** your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a **Pull Request**
 
 ---
 
-## Author
+## 📄 License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-Built as an AI-powered video intelligence platform for turning content into actionable knowledge.
-
+<hr />
+<p align="center">
+  Crafted by <a href="https://www.linkedin.com/in/ranjeet-singh-a08961305/">Ranjeet</a>
+</p>
